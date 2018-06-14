@@ -1,0 +1,53 @@
+---
+title: "Shell Gas Stations in Spain"
+author: "Javier Gonzalez"
+date: "14 de junio de 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Forewords
+
+This is a simple example about posibilities of leaflet package
+
+Suppose you are a dutch citizen travelling along Spain. You'll need gas and there are a lot of gas stations in the country, but if possible you prefer your national petroleum company: **Shell**.
+
+
+## Code
+
+The location of gas stations is stored into eess.csv file.
+
+Code can not be simpler:
+
+
+```{r , message=FALSE, evaluate=FALSE}
+library(leaflet)
+eess = read.csv("eess.csv", stringsAsFactors = F, na.strings = "")
+gasIcon = makeIcon('shell.png', 
+                   iconWidth = 31, iconHeight = 31, 
+                   iconAnchorX = 0, iconAnchorY = 31 )
+map <- eess %>% leaflet() %>% 
+                addTiles() %>% 
+                addMarkers(clusterOptions = markerClusterOptions(), 
+                           icon=gasIcon, 
+                           popup = eess$Nombre)
+```
+
+## Map
+
+```{r begin, echo=F, message=FALSE}
+library(leaflet)
+eess = read.csv("eess.csv", stringsAsFactors = F, na.strings = "")
+gasIcon = makeIcon('shell.png', 
+                   iconWidth = 31, iconHeight = 31, 
+                   iconAnchorX = 0, iconAnchorY = 31 )
+map <- eess %>% leaflet() %>% 
+                addTiles() %>% 
+                addMarkers(clusterOptions = markerClusterOptions(), 
+                           icon=gasIcon, 
+                           popup = eess$Nombre)
+map
+```
